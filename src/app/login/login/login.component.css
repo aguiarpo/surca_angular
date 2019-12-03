@@ -1,0 +1,74 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.section_login{
+  background-color: #4F816D;
+  margin: auto;
+  min-height: 400px;
+  min-width: 400px;
+  display: flex;
+  border: silver solid 1px;
+  border-radius: 5%;
+}
+
+.form_login{
+  height: 80%;
+  width: 80%;
+  margin: auto;
+}
+
+.article_login{
+  background-color: rgba(238,238,238,1);
+  height: 100vh;
+  display: flex;
+}
+
+.btn{
+  float: right;
+}
+
+.material-icons{
+  color: rgba(238,238,238,1);
+}
+
+.materialize-input{
+  color: rgba(238,238,238,1)!important;
+  border-color: rgba(238,238,238,1)!important;
+}
+
+.btn{
+  width: 100px;
+  margin-top: 30px;
+  background-color: #66D994;
+}
+
+.btn:hover{
+  background-color: #5DD39E;
+}
+
+.input-field .prefix.active{
+  color: rgba(238,238,238,1);
+}
+
+.active{
+  color: rgba(238,238,238,1)!important;
+}
+
+input:focus{
+  box-shadow: 0 1px 0 0 rgba(238,238,238,1)!important;
+  border-bottom: 1px solid rgba(238,238,238,1)!important;
+}
+
+input{
+  margin-bottom: 40px!important;
+  border-bottom: 1px solid rgba(238,238,238,1)!important;
+}
+body{
+  overflow: hidden;
+}
+
+label{
+  color: rgba(238,238,238,1);
+}
