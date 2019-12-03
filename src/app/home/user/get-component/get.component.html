@@ -1,0 +1,36 @@
+<article>
+  <span class="span_title">Usuários</span>
+  <table class="striped centered responsive-table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Nível</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users?.content">
+      <td>{{user?.name}}</td>
+      <td>{{user?.email}}</td>
+      <td [ngSwitch]="user?.levelsOfAccess">
+        <span *ngSwitchCase="'ADMIN'">Admin</span>
+        <span *ngSwitchCase="'VETERINARIO'">Veterinário</span>
+        <span *ngSwitchCase="'USUARIO'">Usuário</span>
+      </td>
+      <td class="coluns_icon icons_edit" routerLink="/home/edit/{{user?.code}}"><i class="material-icons">edit</i></td>
+      <td class="coluns_icon icon_delete" (click)="delete(user?.code)"><i class="material-icons">delete</i></td>
+    </tr>
+    </tbody>
+  </table>
+  <ul class="pagination">
+    <li [class.disabled]="page === 1" (click)="page !== 1 ? setPage(page - 1) : null">
+      <a><i class="material-icons">chevron_left</i></a></li>
+    <li *ngFor="let value of pages" (click)="setPage(value)" [class.active]="page === value">
+      <a>{{value}}</a></li>
+    <li [class.disabled]="page === users?.totalPages" class="waves-effect"
+        (click)="page < users?.totalPages ? setPage(page + 1) : null">
+      <a><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+</article>

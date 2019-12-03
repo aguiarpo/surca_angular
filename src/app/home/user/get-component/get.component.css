@@ -1,0 +1,59 @@
+.span_title{
+  margin: 20px auto;
+  color: #4F816D;
+  font-size: 35px;
+}
+
+article{
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination{
+  max-width: 250px;
+  margin: 30px auto 50px auto;
+}
+
+.pagination li.active a{
+  background-color: #4F816D;
+  color: rgba(238,238,238,1);
+}
+
+li, i{
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
+
+table{
+  width: 70%;
+  margin: auto;
+  border: solid 1px #4F816D;
+}
+
+.coluns_icon{
+  min-width: 30px;
+}
+
+td > i{
+  color: rgba(238,238,238,1);
+}
+
+.icon_delete{
+  cursor: pointer;
+  background-color: #AD4347 ;
+}
+
+.icons_edit{
+  cursor: pointer;
+  background-color: #179CBF;
+}
+
+th{
+  border-bottom: solid 1px #4F816D;
+}
