@@ -1,21 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login.service';
-
-interface User {
-  createdDate: string;
-  lastModifiedDate: string;
-  createdBy: string;
-  lastModifiedBy: string;
-  code: number ;
-  name: string;
-  email: string;
-  state: string;
-  city: string;
-  telephone1: string;
-  telephone2: string;
-  levelsOfAccess: string;
-  status: string;
-}
+import {User} from '../../globals/constants.service';
+import {Router} from '@angular/router';
+import { ConstantsService } from '../../globals/constants.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -25,15 +13,40 @@ interface User {
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
+  checkbox = true;
   user: User;
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router, private  constant: ConstantsService,
+              private cookie: CookieService) {}
 
   ngOnInit() {
+    this.email = this.cookie.get('email');
+    this.password = this.cookie.get('password');
   }
 
   async buttonClick() {
      this.user = await this.loginService.getUser(this.email, this.password);
-     console.log(this.user);
+     if (this.user === undefined) {
+       // @ts-ignore
+       M.toast({html: 'Email ou Senha inválidas', classes: 'rounded'});
+     } else {
+       this.saveLogin();
+       this.navigation();
+     }
+  }
+
+  private saveLogin() {
+    this.constant.login = this.user;
+    this.constant.login.password = this.password;
+    if (this.checkbox) {
+      this.cookie.set('email', this.user.email);
+      this.cookie.set('password', this.password);
+    } else {
+      this.cookie.deleteAll();
+    }
+  }
+
+  private navigation() {
+    this.router.navigate(['/home']);
   }
 }

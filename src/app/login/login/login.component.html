@@ -1,19 +1,28 @@
 <article class="article_login">
-  <section class="section_login">
+  <section (keydown.enter)="buttonClick()" class="section_login">
     <div class="row form_login">
       <div class="row">
         <div class="input-username input-field col s12">
           <i class="material-icons prefix">person</i>
           <input id="email" [(ngModel)]="email"  type="text" class="materialize-input">
-          <label for="email">Email</label>
+          <label [class.active]="email !== undefined" for="email">Email</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">vpn_key</i>
           <input id="password" [(ngModel)]="password" type="password" class="materialize-input">
-          <label for="password">Senha</label>
+          <label [class.active]="password !== undefined" for="password">Senha</label>
         </div>
+      </div>
+      <div class="div_remember">
+        <p>
+          <label>
+            <input [(ngModel)]="checkbox" class="checkbox_remember" type="checkbox" />
+            <span class="span_remember">Lembrar de mim</span>
+          </label>
+          <span class="reset_password">Esqueceu a senha?</span>
+        </p>
       </div>
       <button (click)="buttonClick()" class="btn waves-effect waves-light" type="submit" name="action">LOGIN</button>
     </div>

@@ -20,13 +20,8 @@
 }
 
 .article_login{
-  background-color: rgba(238,238,238,1);
   height: 100vh;
   display: flex;
-}
-
-.btn{
-  float: right;
 }
 
 .material-icons{
@@ -40,7 +35,9 @@
 
 .btn{
   width: 100px;
+  float: right;
   margin-top: 30px;
+  right: 10px;
   background-color: #66D994;
 }
 
@@ -62,7 +59,6 @@ input:focus{
 }
 
 input{
-  margin-bottom: 40px!important;
   border-bottom: 1px solid rgba(238,238,238,1)!important;
 }
 body{
@@ -71,4 +67,35 @@ body{
 
 label{
   color: rgba(238,238,238,1);
+}
+
+.reset_password{
+  cursor: pointer;
+  font-size: small;
+  margin-top: 20px;
+  padding-left: 20px;
+  color: rgba(0,0,0,.5);
+  float: right;
+  text-decoration: underline;
+}
+
+#email{
+  margin-bottom: 30px;
+}
+
+.span_remember{
+  cursor: pointer;
+  font-size: small!important;
+  margin-top: 20px;
+  color: rgba(0,0,0,.5);
+  text-decoration: underline;
+}
+
+[type="checkbox"] + span:not(.lever){
+  padding-left: 25px!important;
+}
+
+.div_remember{
+  padding-left: 10px;
+  padding-right: 10px;
 }

@@ -5,3 +5,8 @@
   padding: 0;
   font-family: 'Roboto', sans-serif;
 }
+
+body{
+  background-color: rgba(238,238,238,1);
+  overflow: hidden
+}
