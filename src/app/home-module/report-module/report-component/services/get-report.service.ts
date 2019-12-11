@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ConstantsService} from '../../../../globals/constants.service';
+import {ConstantsService} from '../../../../globals-service/constants.service';
 import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
@@ -9,7 +9,7 @@ import {CookieService} from 'ngx-cookie-service';
 export class GetReportService {
   response;
 
-  private header(): object {
+  private header(): object { // Cabeçalho para as requisições
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -17,12 +17,10 @@ export class GetReportService {
         Authorization: 'Basic ' + btoa(this.cookie.get('email') + ':' + this.cookie.get('password')),
         observe: 'response'
       })
-      //        Authorization: 'Basic ' + btoa(this.constant.login.email + ':'
-      //           + this.constant.login.password),
     };
   }
 
-  async getAll() {
+  async getAll() { // Pega tudo
     this.constant.progress = true;
     await this.http.get(this.constant.baseAppUrl + 'v1/admin/animal/report',
       this.header()).toPromise().catch(err => this.response = undefined).then(data => this.response = data);
@@ -30,7 +28,7 @@ export class GetReportService {
     return this.response;
   }
 
-  async get(name) {
+  async get(name) { // Pega por campo de pesquisa
     this.constant.progress = true;
     await this.http.get(this.constant.baseAppUrl + 'v1/admin/animal/report/' + name,
       this.header()).toPromise().catch(err => this.response = undefined).then(data => this.response = data);
@@ -41,7 +39,7 @@ export class GetReportService {
 
   constructor(private http: HttpClient, private constant: ConstantsService, private cookie: CookieService) {}
 
-  async getSuggestion(suggestionValue: string) {
+  async getSuggestion(suggestionValue: string) { // Pega as sugestões para a pesquisa
     await this.http.get(this.constant.baseAppUrl + 'v1/admin/animal/' + suggestionValue  ,
       this.header()).toPromise().catch(err => this.response = undefined).then(data => this.response = data);
     return this.response;

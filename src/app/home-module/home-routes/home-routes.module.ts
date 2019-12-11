@@ -1,10 +1,10 @@
 import { NgModule} from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GetComponent } from '../user/get-component/get.component';
-import {HomeComponent} from '../home/home.component';
+import { GetComponent } from '../user-module/get-component/get.component';
+import {HomeComponent} from '../home-component/home.component';
 import { BlockedGuard } from '../../guard/blocked.guard';
-import { CreateAndEditComponent } from '../user/create-and-edit-component/create-and-edit.component';
-import {ReportComponent} from '../report/report/report.component';
+import { CreateAndEditComponent } from '../user-module/create-and-edit-component/create-and-edit.component';
+import {ReportComponent} from '../report-module/report-component/report.component';
 
 const appRoutesHome: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [BlockedGuard],

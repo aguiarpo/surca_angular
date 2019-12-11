@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Vet} from '../../../globals/constants.service';
+import {Vet} from '../../../globals-service/constants.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CrudService} from '../crud-service/crud.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { ConstantsService } from '../../../globals/constants.service';
+import { ConstantsService } from '../../../globals-service/constants.service';
 
 @Component({
   selector: 'app-create-and-edit',
@@ -31,7 +31,7 @@ export class CreateAndEditComponent implements OnInit {
     if (this.id === undefined) { this.setUserValuesEmptyInputs(); } else { this.type = 'edit'; }
   }
 
-  private setUserValuesEmptyInputs() {
+  private setUserValuesEmptyInputs() { // Seta o valores do usuário caso esteja na página register
     this.type = 'register';
     this.vet = {
       code: null,
@@ -55,7 +55,7 @@ export class CreateAndEditComponent implements OnInit {
     };
   }
 
-  get f() { return this.registerForm.controls; }
+  get f() { return this.registerForm.controls; } // Função para os controles das validações
 
   async ngOnInit() {
     if (this.type === 'edit') {
@@ -125,11 +125,11 @@ export class CreateAndEditComponent implements OnInit {
   async clickButton() {
     this.buttonClick = true;
     this.validator();
-    if (this.registerForm.valid) {
-      if ( this.type === 'edit') {
+    if (this.registerForm.valid) { // Verifica a validação
+      if ( this.type === 'edit') { // Verifica a página
         this.vet.user.code = this.id;
-        this.response = await this.crudService.edit(this.vet)
-        if ( this.response !== undefined) {
+        this.response = await this.crudService.edit(this.vet); // Edita o usuário
+        if ( this.response !== undefined) { // Verifica a resposta
           if (this.response.error === undefined) {this.router.navigate(['home/getUsers']); } else {
             // @ts-ignore
             M.toast({html: this.response.error.fieldMessage});
@@ -139,7 +139,7 @@ export class CreateAndEditComponent implements OnInit {
           M.toast({html: 'Erro, tente novamente mais tarde'});
         }
       } else {
-        this.response = await this.crudService.create(this.vet);
+        this.response = await this.crudService.create(this.vet); // Registra o usuário
         if (this.response !== undefined) {
           if (this.response.error === undefined) {this.router.navigate(['home/getUsers']); } else {
             // @ts-ignore

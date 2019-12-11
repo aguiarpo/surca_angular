@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
-import { UserModule } from './user/user.module';
+import { HomeComponent } from './home-component/home.component';
+import { UserModule } from './user-module/user.module';
 import { HomeRoutesModule } from './home-routes/home-routes.module';
-import { ReportModule } from './report/report.module';
+import { ReportModule } from './report-module/report.module';
 
 
 @NgModule({

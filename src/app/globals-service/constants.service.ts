@@ -26,8 +26,8 @@ export interface Vet {
 @Injectable({
   providedIn: 'root'
 })
-export class ConstantsService {
+export class ConstantsService { // Classe contendo todas as variáveis globais
   readonly baseAppUrl: string = 'http://localhost:8080/';
   login: User;
-  progress = false;
+  progress = false; // Variável da barra de progresso - true = show, false - hide
 }

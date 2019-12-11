@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { CrudService } from '../crud-service/crud.service';
-import {User, Vet} from '../../../globals/constants.service';
+import {User, Vet} from '../../../globals-service/constants.service';
 import {Subject} from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ConstantsService } from '../../../globals/constants.service';
+import { ConstantsService } from '../../../globals-service/constants.service';
 
 interface GetUser {
   content: Array<User>;
@@ -45,7 +45,8 @@ export class GetComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     await this.createTable();
-    this.filterString.pipe(debounceTime(500)).subscribe(() => this.getSuggestions());
+    this.filterString.pipe(debounceTime(500))
+      .subscribe(() => this.getSuggestions()); // Após 500ms sem o usuário digitar executa a função
   }
 
   async getSuggestions() {
@@ -59,7 +60,7 @@ export class GetComponent implements OnInit, AfterViewInit {
             this.suggestions.push(this.response.content[i].name);
             break;
           case 'email':
-          case 'removed':
+          case 'removed': // Pega os usuários removidos de maneira lógica, pesquisa feita por email
             this.suggestions.push(this.response.content[i].email);
             break;
         }
@@ -68,7 +69,7 @@ export class GetComponent implements OnInit, AfterViewInit {
   }
 
   private async createTable() {
-    if ( this.suggestionValue === undefined) {
+    if ( this.suggestionValue === undefined) { // Verifica oq foi digitado pelo usuário no campo de pesquisa
       this.users = await this.crudService.getAll(this.select, 'empty', this.page - 1);
     } else {
       let search;
@@ -96,11 +97,11 @@ export class GetComponent implements OnInit, AfterViewInit {
   }
 
   async delete(code: number) {
-      if (await this.crudService.delete(code, this.select)) {
+      if (await this.crudService.delete(code, this.select)) { // Deleta o usuário no banco de dados
         this.users.content.forEach((value, index) => {
           // tslint:disable-next-line:triple-equals
           if (value.code == code) {
-            this.users.content.splice(index, 1);
+            this.users.content.splice(index, 1); // Remove o usuário na lista sem atualizar a página
           }
         });
       }
@@ -111,7 +112,7 @@ export class GetComponent implements OnInit, AfterViewInit {
     $('select').formSelect();
   }
 
-  setFocus(b: boolean) {
+  setFocus(b: boolean) { // Configura o focus
     this.focus = b;
   }
 
@@ -121,7 +122,7 @@ export class GetComponent implements OnInit, AfterViewInit {
     await this.getAll();
   }
 
-  onKeyUp(): void {
+  onKeyUp(): void { // Função para o evento keyUp
     this.filterString.next();
   }
 
@@ -130,7 +131,7 @@ export class GetComponent implements OnInit, AfterViewInit {
     this.createTable();
   }
 
-  async changePlaceholder() {
+  async changePlaceholder() { // Muda o placeholder, conforme o valor do select
     switch (this.select) {
      case 'name':
        this.placeholder = 'Pesquisar por Nome';
@@ -145,7 +146,7 @@ export class GetComponent implements OnInit, AfterViewInit {
     this.createTable();
   }
 
-  navigation(s: string) {
+  navigation(s: string) { // Função para gerenciar as navegações
     this.constant.progress = true;
     this.router.navigate([s]);
   }
@@ -155,7 +156,7 @@ export class GetComponent implements OnInit, AfterViewInit {
     if (this.vet) { this.showModal = true; }
   }
 
-  setShowModal(b: boolean) {
+  setShowModal(b: boolean) { // Mostra as infomações do usuário
     this.showModal = b;
   }
 }

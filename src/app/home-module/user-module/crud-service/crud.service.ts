@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ConstantsService} from '../../../globals/constants.service';
+import {ConstantsService} from '../../../globals-service/constants.service';
 import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class CrudService {
 
   constructor(private http: HttpClient, private constant: ConstantsService, private cookie: CookieService) {}
 
-  private header(): object {
+  private header(): object { // Cabeçalho para as requisições
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -20,12 +20,10 @@ export class CrudService {
         Authorization: 'Basic ' + btoa(this.cookie.get('email') + ':' + this.cookie.get('password')),
         observe: 'response'
       })
-      //        Authorization: 'Basic ' + btoa(this.constant.login.email + ':'
-      //           + this.constant.login.password),
     };
   }
 
-  async delete(id: number, column: string) {
+  async delete(id: number, column: string) { // Deixa os usuários visíveis ou invisíveis
     this.constant.progress = true;
     if ( column === 'removed') {
       await this.http.delete(this.constant.baseAppUrl + 'v1/admin/usuario/visible/' + id,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { ConstantsService } from '../globals/constants.service';
+import { ConstantsService } from '../../globals-service/constants.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class LoginService {
   user;
   constructor(private http: HttpClient, private  constant: ConstantsService) { }
 
-  async getUser(email, password) {
+  async getUser(email, password) {// Função para verficar se o usuário existe
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

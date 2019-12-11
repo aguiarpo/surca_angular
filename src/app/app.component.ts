@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ConstantsService} from './globals/constants.service';
+import {ConstantsService} from './globals-service/constants.service';
 
 @Component({
   selector: 'app-root',

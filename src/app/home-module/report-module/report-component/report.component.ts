@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {GetReportService} from './service/get-report.service';
+import {GetReportService} from './services/get-report.service';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {ExcelService} from './service/excel.service';
+import {ExcelService} from './services/excel.service';
 
 interface Report {
   male: number;
@@ -15,19 +15,6 @@ interface Report {
   state: string;
   city: string;
   neighborhood: string;
-}
-
-interface Excel {
-  Macho: number;
-  'Fêmea': number;
-  Gato: number;
-  Cachorro: number;
-  Outro: number;
-  Castrado: number;
-  'Não castrado': number;
-  Estado: string;
-  Cidade: string;
-  Bairro: string;
 }
 
 @Component({
@@ -49,10 +36,11 @@ export class ReportComponent implements OnInit {
 
   async ngOnInit() {
     await this.createTable();
-    this.filterString.pipe(debounceTime(500)).subscribe(() => this.getSuggestions());
+    this.filterString.pipe(debounceTime(500))
+      .subscribe(() => this.getSuggestions()); // Quando o usuário fica 500ms sem digitar exceuta a função
   }
 
-  onKeyUp() {
+  onKeyUp() { // Função para o evento de keyUp
     this.filterString.next();
   }
 
@@ -60,7 +48,7 @@ export class ReportComponent implements OnInit {
     this.createTable();
   }
 
-  setFocus(b: boolean) {
+  setFocus(b: boolean) { // Configura o focus na lista de sugestõees
     this.focus = b;
   }
 
@@ -70,7 +58,7 @@ export class ReportComponent implements OnInit {
     if (this.response) {
       let i;
       for (i = 0; i < this.response.content.length; i++) {
-          this.suggestions.push(this.response.content[i].name);
+          this.suggestions.push(this.response.content[i].name); // Salva em uma lista apenas os nomes vindos de uma requisição ao banco
       }
     }
   }
@@ -82,7 +70,7 @@ export class ReportComponent implements OnInit {
   }
 
   private async createTable() {
-    if ( this.suggestionValue === undefined || this.suggestionValue === '') {
+    if ( this.suggestionValue === undefined || this.suggestionValue === '') { // Verifica oq foi digitado pelo usuário como sugestão
       this.reportList = await this.report.getAll();
     } else {
       this.reportList = await this.report.get(this.suggestionValue);
@@ -90,7 +78,7 @@ export class ReportComponent implements OnInit {
     this.createExcel();
   }
 
-  private createExcel() {
+  private createExcel() { // Gera uma lista para que possa ser exportado em formato excel
     let i;
     for (i = 0; i < this.reportList.length; i++) {
       this.map.set('Quantidade(Fêmea)', this.reportList[i].female);

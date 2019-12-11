@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
-import {User} from '../../globals/constants.service';
+import { LoginService } from '../service/login.service';
+import {User} from '../../globals-service/constants.service';
 import {Router} from '@angular/router';
-import { ConstantsService } from '../../globals/constants.service';
+import { ConstantsService } from '../../globals-service/constants.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  async buttonClick() {
+  async buttonClick() { // Função para o evento de click
      this.user = await this.loginService.getUser(this.email, this.password);
      if (this.user === undefined) {
        // @ts-ignore
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
      }
   }
 
-  private saveLogin() {
+  private saveLogin() { // Salva o usuário no cookie do Site
     this.constant.login = this.user;
     this.constant.login.password = this.password;
     if (this.checkbox) {
