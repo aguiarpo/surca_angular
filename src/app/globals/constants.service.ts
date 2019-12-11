@@ -17,10 +17,17 @@ export interface User {
   status: string;
 }
 
+export interface Vet {
+  code: number;
+  crmv: string;
+  user: User;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ConstantsService {
   readonly baseAppUrl: string = 'http://localhost:8080/';
   login: User;
+  progress = false;
 }

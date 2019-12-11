@@ -20,18 +20,21 @@ export class LoginComponent implements OnInit {
               private cookie: CookieService) {}
 
   ngOnInit() {
-    this.email = this.cookie.get('email');
-    this.password = this.cookie.get('password');
   }
 
   async buttonClick() {
      this.user = await this.loginService.getUser(this.email, this.password);
      if (this.user === undefined) {
        // @ts-ignore
-       M.toast({html: 'Email ou Senha inválidas', classes: 'rounded'});
+       M.toast({html: 'Email ou Senha inválidas'});
      } else {
-       this.saveLogin();
-       this.navigation();
+       if (this.user.levelsOfAccess === 'ADMIN') {
+         this.saveLogin();
+         this.navigation();
+       } else {
+         // @ts-ignore
+         M.toast({html: 'Email ou Senha inválidas'});
+       }
      }
   }
 

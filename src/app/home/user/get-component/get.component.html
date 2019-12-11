@@ -1,36 +1,110 @@
-<article>
-  <span class="span_title">Usuários</span>
-  <table class="striped centered responsive-table">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Nível</th>
-      <th></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of users?.content">
-      <td>{{user?.name}}</td>
-      <td>{{user?.email}}</td>
-      <td [ngSwitch]="user?.levelsOfAccess">
-        <span *ngSwitchCase="'ADMIN'">Admin</span>
-        <span *ngSwitchCase="'VETERINARIO'">Veterinário</span>
+<article >
+  <nav>
+    <div class="nav-wrapper">
+      <section>
+          <div class="input-field div_input">
+            <input [placeholder]="placeholder" (keyup.enter)="getAll()"
+                   (keypress)="onKeyUp()" [(ngModel)]="suggestionValue" (focus)="setFocus(true)"
+                   id="search" type="search" autocomplete="off" required>
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        <div (click)="setFocus(false)" class="input-field div_select col s12">
+        <select (change)="changePlaceholder()" [(ngModel)]="select">
+            <optgroup label="Pesquisar Por:"></optgroup>
+            <option *ngFor="let option of options | keyvalue"
+                    [ngValue]="option.key">{{option.value}}</option>
+          </select>
+        </div>
+      </section>
+    </div>
+    <ul *ngIf="focus" class="suggestions">
+      <li *ngFor="let suggetion of suggestions" (click)="setSuggestion(suggetion)" >{{suggetion}}</li>
+    </ul>
+  </nav>
+  <div (click)="setFocus(false)">
+    <table class="striped centered">
+      <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Acesso</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users?.content">
+        <td (click)="getById(user?.code)">{{user?.name}}</td>
+        <td (click)="getById(user?.code)">{{user?.email}}</td>
+        <td (click)="getById(user?.code)" [ngSwitch]="user?.levelsOfAccess">
+          <span *ngSwitchCase="'ADMIN'">Admin</span>
+          <span *ngSwitchCase="'VETERINARIO'">Veterinário</span>
+          <span *ngSwitchCase="'USUARIO'">Usuário</span>
+        </td>
+        <td class="coluns_icon icons_edit" (click)="navigation('/home/user/edit/' + user?.code)"><i class="material-icons">edit</i></td>
+        <td class="coluns_icon icon_delete" (click)="delete(user?.code)"><i class="material-icons">delete</i></td>
+      </tr>
+      <tr>
+        <td (click)="navigation('/home/user/register')" class="td_add" colspan="5">Adicionar Usuário</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="div_pagination">
+      <ul class="pagination">
+        <li [class.disabled]="page === 1" (click)="page !== 1 ? setPage(page - 1) : null">
+          <a><i class="material-icons">chevron_left</i></a></li>
+        <li *ngFor="let value of pages" (click)="page !== value ? setPage(value) : null" [class.active]="page === value">
+          <a>{{value}}</a></li>
+        <li [class.disabled]="page >= users?.totalPages"
+            (click)="page < users?.totalPages ? setPage(page + 1) : null">
+          <a><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+  </div>
+</article>
+<article [style.display]="showModal ? 'flex' : 'none'" class="show_modal">
+  <section *ngIf="vet">
+    <div>
+      <span class="title">Nome: </span>
+      <span>{{vet?.user?.name}}</span>
+    </div>
+    <div>
+      <span class="title">Email: </span>
+      <span>{{vet?.user?.email}}</span>
+    </div>
+    <div>
+      <span class="title">Estado: </span>
+      <span>{{vet?.user?.state}}</span>
+    </div>
+    <div>
+      <span class="title">Cidade: </span>
+      <span>{{vet?.user?.city}}</span>
+    </div>
+    <div>
+      <span class="title">Telefone: </span>
+      <span>{{vet?.user?.telephone1}}</span>
+    </div>
+    <div *ngIf="vet?.user?.telephone2">
+      <span class="title">Telefone: </span>
+      <span>{{vet?.user?.telephone2}}</span>
+    </div>
+    <div>
+      <span class="title">Acesso: </span>
+      <span [ngSwitch]="vet?.user?.levelsOfAccess">
         <span *ngSwitchCase="'USUARIO'">Usuário</span>
-      </td>
-      <td class="coluns_icon icons_edit" routerLink="/home/edit/{{user?.code}}"><i class="material-icons">edit</i></td>
-      <td class="coluns_icon icon_delete" (click)="delete(user?.code)"><i class="material-icons">delete</i></td>
-    </tr>
-    </tbody>
-  </table>
-  <ul class="pagination">
-    <li [class.disabled]="page === 1" (click)="page !== 1 ? setPage(page - 1) : null">
-      <a><i class="material-icons">chevron_left</i></a></li>
-    <li *ngFor="let value of pages" (click)="setPage(value)" [class.active]="page === value">
-      <a>{{value}}</a></li>
-    <li [class.disabled]="page === users?.totalPages" class="waves-effect"
-        (click)="page < users?.totalPages ? setPage(page + 1) : null">
-      <a><i class="material-icons">chevron_right</i></a></li>
-  </ul>
+        <span *ngSwitchCase="'VETERINARIO'">Veterinário</span>
+        <span *ngSwitchCase="'ADMIN'">Admin</span>
+      </span>
+    </div>
+    <div *ngIf="vet?.user?.levelsOfAccess === 'VETERINARIO'">
+      <div>
+        <span class="title">Crmv: </span>
+        <span>{{vet?.crmv}}</span>
+      </div>
+    </div>
+    <div (click)="setShowModal(false)">
+      <span class="span_left">Voltar</span>
+    </div>
+  </section>
 </article>

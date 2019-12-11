@@ -1,0 +1,11 @@
+.progress{
+  position: fixed;
+  z-index: 101;
+  background-color: #5DD39E;
+  margin: 0;
+  tab-index: 9999999!important;
+}
+
+.indeterminate:before{
+  background-color: #4F816D;
+}

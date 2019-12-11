@@ -43,11 +43,11 @@ section{
 }
 
 .button_menu:hover{
-  background-color: #5DD39E;
+  background-color: rgba(	79,	129, 109, .5);
   color: rgba(238,238,238,1);
 }
 
 .button_menu_active{
-  background-color: #5DD39E;
+  background-color: #4F816D;
   color: rgba(238,238,238,1);
 }
