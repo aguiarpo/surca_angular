@@ -1,0 +1,49 @@
+<article >
+    <div class="nav-wrapper">
+    <nav>
+      <section>
+        <div class="input-field div_input">
+          <input placeholder="Pesquisar por Bairro" (keyup.enter)="getAll()"
+                 (keypress)="onKeyUp()" [(ngModel)]="suggestionValue" (focus)="setFocus(true)"
+                 id="search" type="search" autocomplete="off" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+        <ul *ngIf="focus" class="suggestions">
+          <li *ngFor="let suggetion of suggestions" (click)="setSuggestion(suggetion)" >{{suggetion}}</li>
+        </ul>
+      </section>
+    </nav>
+    <table class="striped centered">
+      <thead>
+      <tr>
+        <th (click)="excelDownload()">Fêmea</th>
+        <th>Macho</th>
+        <th>Castrado</th>
+        <th>Não castrado</th>
+        <th>Gato</th>
+        <th>Cachorro</th>
+        <th>Outro</th>
+        <th>Estado</th>
+        <th>Cidade</th>
+        <th>Bairro</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let report of reportList">
+        <td>{{report?.female}}</td>
+        <td>{{report?.male}}</td>
+        <td>{{report?.castrated}}</td>
+        <td>{{report?.notCastrated}}</td>
+        <td>{{report?.cat}}</td>
+        <td>{{report?.dog}}</td>
+        <td>{{report?.other}}</td>
+        <td>{{report?.state}}</td>
+        <td>{{report?.city}}</td>
+        <td>{{report?.neighborhood}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+<a (click)="excelDownload()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">file_download</i></a>

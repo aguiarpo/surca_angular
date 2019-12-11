@@ -1,0 +1,96 @@
+<article>
+  <section>
+    <div class="row col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input *ngIf="vet" [(ngModel)]="vet.user.name" id="name" type="text" class="validate">
+          <label [class.active]="type === 'edit'" for="name">Nome</label>
+          <div *ngIf="buttonClick && f.name.errors">
+            <span *ngIf="f.name.errors?.pattern">Nome inválido</span>
+            <span *ngIf="f.name.errors?.required">Nome não pode estar vazio</span>
+          </div>
+        </div>
+        <div class="input-field col s6">
+          <input *ngIf="vet" [(ngModel)]="vet.user.email"  id="email" type="text" class="validate">
+          <label [class.active]="type === 'edit'" for="email">Email</label>
+          <div *ngIf="buttonClick && f.email.errors">
+            <span *ngIf="f.email.errors?.email">Email inválido</span>
+            <span *ngIf="f.email.errors?.required">Email não pode estar vazio</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col div_select">
+          <select *ngIf="vet" [(ngModel)]="vet.user.state">
+            <optgroup label="Escolha um Estado"></optgroup>
+            <option *ngFor="let stateValue of states"
+                    [ngValue]="stateValue">{{stateValue}}</option>
+          </select>
+          <label class="active">Estados</label>
+        </div>
+        <div class="input-field city_div col s9">
+          <input *ngIf="vet" [(ngModel)]="vet.user.city"  id="city" type="text" class="validate">
+          <label [class.active]="type === 'edit'" for="city">Cidade</label>
+          <div *ngIf="buttonClick && f.city.errors">
+            <span *ngIf="f.city.errors?.pattern">Cidade inválida</span>
+            <span *ngIf="f.city.errors?.required">Cidade não pode estar vazia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s6">
+          <input *ngIf="vet" [(ngModel)]="vet.user.telephone1"  id="telephone1" type="text" class="validate">
+          <label [class.active]="type === 'edit'" for="telephone1">Telefone</label>
+          <div *ngIf="buttonClick && f.telephone1.errors">
+            <span *ngIf="f.telephone1.errors?.pattern">Telefone inválido: (47) 9999-0000 ou (47) 99999-0000</span>
+            <span  *ngIf="f.telephone1.errors?.required">Telefone não pode estar vazio</span>
+          </div>
+        </div>
+        <div class="input-field col s6">
+          <input *ngIf="vet" [(ngModel)]="vet.user.telephone2" id="telephone2" type="text" class="validate">
+          <label [class.active]="type === 'edit'" for="telephone2">Telefone</label>
+          <div *ngIf="buttonClick && f.telephone2.errors">
+            <span *ngIf="f.telephone2.errors?.pattern">Telefone inválido: (47) 9999-0000 ou (47) 99999-0000</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col div_select">
+          <select *ngIf="vet" [(ngModel)]="vet.user.levelsOfAccess">
+            <optgroup label="Escolha um acesso"></optgroup>
+            <option *ngFor="let level of levelsOfAccessSelect | keyvalue"
+                    [ngValue]="level.key">{{level.value}}</option>
+          </select>
+          <label class="active" >Acesso</label>
+        </div>
+        <div *ngIf="vet && vet.user.levelsOfAccess === 'VETERINARIO'"  class="input-field crmv_div col s8">
+          <input [(ngModel)]="vet.crmv"  id="crmv" type="text" class="validate">
+          <label [class.active]="type === 'edit'" for="crmv">Crmv</label>
+          <div *ngIf="buttonClick && (f.crmv.errors || f.crmv2.errors)">
+            <span *ngIf="f.crmv.errors?.pattern">Crmv inválido</span>
+            <span *ngIf="f.crmv2.errors?.required">Crmv não pode estar vazio</span>
+          </div>
+        </div>
+      </div>
+      <div class="row password_row">
+        <p *ngIf="type === 'edit'">
+          <label>
+            <input [(ngModel)]="editPassword" type="checkbox" />
+            <span>Editar Senha</span>
+          </label>
+        </p>
+        <div *ngIf="editPassword" class="input-field password col s8">
+          <input  [(ngModel)]="vet.user.password" [type]="passwordType"  id="password" class="validate">
+          <label [class.active]="type === 'edit'"  for="password">Senha</label>
+          <div *ngIf="buttonClick && (f.password.errors || f.password2.errors)">
+            <span *ngIf="f.password.errors?.pattern">Senha deve conter no mínimo um número, uma letra maiúscula e uma minúscula</span>
+            <span *ngIf="f.password2.errors?.required">Senha não pode estar vazia</span>
+            <span *ngIf="f.password.errors?.min">Senha precisa conter mais de 8 caracteres</span>
+          </div>
+        </div>
+      </div>
+      <button (click)="clickButton()" class="btn waves-effect waves-light" name="action">EDITAR</button>
+    </div>
+  </section>
+</article>
