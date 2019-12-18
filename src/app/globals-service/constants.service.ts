@@ -27,7 +27,7 @@ export interface Vet {
   providedIn: 'root'
 })
 export class ConstantsService { // Classe contendo todas as variáveis globais
-  readonly baseAppUrl: string = 'http://localhost:8080/';
+  readonly baseAppUrl: string = 'http://10.197.66.2/';
   login: User;
   progress = false; // Variável da barra de progresso - true = show, false - hide
 }

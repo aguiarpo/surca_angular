@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { LoginService } from '../service/login.service';
 import {User} from '../../globals-service/constants.service';
 import {Router} from '@angular/router';
@@ -10,11 +10,12 @@ import { CookieService } from 'ngx-cookie-service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   email: string;
   password: string;
   checkbox = true;
   user: User;
+  admin: User;
 
   constructor(private loginService: LoginService, private router: Router, private  constant: ConstantsService,
               private cookie: CookieService) {}
@@ -51,5 +52,19 @@ export class LoginComponent implements OnInit {
 
   private navigation() {
     this.router.navigate(['/home']);
+  }
+
+  async ngAfterViewInit() {
+    this.constant.progress = true;
+    // @ts-ignore
+    this.admin = await this.loginService.createAdmin();
+    if (this.admin ===  undefined) {
+      // @ts-ignore
+      M.toast({html: 'Erro, tente novamente mais tarde'});
+    } else if (this.admin !=  null) {
+       // @ts-ignore
+      M.toast({html: 'Admin criado com sucesso: ' + this.admin.email});
+    }
+    this.constant.progress = false;
   }
 }

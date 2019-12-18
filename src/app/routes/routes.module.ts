@@ -11,7 +11,7 @@ const appRoutes: Routes = [
   declarations: [],
   imports: [
     HomeModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true } ),
+    RouterModule.forRoot(appRoutes, { useHash: true } ),
   ],
   exports: [
     RouterModule

@@ -30,4 +30,24 @@ export class LoginService {
     );
     return this.user;
   }
+
+  async createAdmin() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        observe: 'response'
+      })
+    };
+    await this.http.get(this.constant.baseAppUrl + 'v1/create/admin', httpOptions).toPromise().catch(
+      err => {
+        this.user = undefined;
+      }
+    ).then(
+      data => {
+        this.user = data;
+      }
+    );
+    return this.user;
+  }
 }
